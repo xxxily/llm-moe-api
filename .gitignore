@@ -6,7 +6,7 @@ upload
 build
 *.db-journal
 logs
-web/node_modules
+**/node_modules/
 web/dist
 .env
 .DS_Store

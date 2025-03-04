@@ -22,9 +22,6 @@
 
 ## 系统架构
 
-<details>
-<summary>点击展开系统架构图</summary>
-
 ```mermaid
 flowchart TD
     Client[用户客户端] -->|发送请求| API[API接口层]
@@ -46,10 +43,6 @@ flowchart TD
         Config[配置管理器] -->|管理模型配置| DB
     end
 ```
-
-</details>
-
-![系统架构图](./mermaid-architecture.png)
 
 ## 安装与设置
 
