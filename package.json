@@ -1,0 +1,42 @@
+{
+  "name": "llm-api-moe",
+  "version": "0.0.1",
+  "description": "API-based LLM MOE API selection system",
+  "type": "module",
+  "main": "src/index.js",
+  "scripts": {
+    "start": "node src/index.js",
+    "dev": "nodemon src/index.js",
+    "setup": "node src/setup.js",
+    "build:web": "cd web && npm run build",
+    "dev:web": "cd web && npm run dev",
+    "setup:web": "cd web && npm install"
+  },
+  "keywords": [
+    "llm",
+    "api",
+    "moe",
+    "DeepSeek",
+    "grok3",
+    "claude",
+    "gpt"
+  ],
+  "author": "Blaze",
+  "license": "MIT",
+  "dependencies": {
+    "@prisma/client": "^5.22.0",
+    "bcrypt": "^5.1.1",
+    "chalk": "^5.4.1",
+    "cookie-parser": "^1.4.7",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.7",
+    "ejs": "^3.1.10",
+    "express": "^4.21.2",
+    "express-session": "^1.18.1",
+    "node-fetch": "^3.3.2"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.9",
+    "prisma": "^5.22.0"
+  }
+}

@@ -1,0 +1,24 @@
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  font-family: 'Helvetica Neue', Helvetica, 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', '微软雅黑', Arial, sans-serif;
+}
+
+#app {
+  height: 100%;
+}
+
+.el-menu-vertical:not(.el-menu--collapse) {
+  width: 200px;
+  min-height: 100vh;
+}
+
+.el-menu {
+  height: 100%;
+  border-right: none;
+}
+
+.el-menu-item.is-active {
+  background-color: #ecf5ff;
+}
