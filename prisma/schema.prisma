@@ -64,3 +64,16 @@ model Admin {
 
   @@map("admins")
 }
+
+model SystemConfig {
+  id          Int      @id @default(autoincrement())
+  key         String   @unique  // 配置键名
+  value       String   // 配置值
+  description String   // 配置描述
+  type        String   // 配置类型：text/boolean/number/json
+  category    String   // 配置分类：selector/agent/system等
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@map("system_configs")
+}

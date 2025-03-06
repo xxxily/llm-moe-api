@@ -1,6 +1,7 @@
 import fetch from 'node-fetch';
 import chalk from 'chalk';
 import { getAllModelConfigs, getDefaultModelConfig } from './modelConfigService.js';
+import { getConfig } from './systemConfigService.js';
 
 // 默认选择器模型配置
 const defaultSelectorConfig = {
@@ -10,7 +11,7 @@ const defaultSelectorConfig = {
 };
 
 // 用于选择模型的提示词模板
-const DEFAULT_PROMPT_TEMPLATE = `
+const SELECTOR_PROMPT_TEMPLATE = `
 你是一个智能模型选择器。根据用户的请求，选择最合适的AI模型进行回答。
 以下是可用的模型及其能力描述:
 
@@ -22,7 +23,26 @@ const DEFAULT_PROMPT_TEMPLATE = `
 `;
 
 // 根据用户请求选择最合适的模型
+// 获取选择器配置
+async function getSelectorConfig() {
+  const enableAutoSelect = await getConfig('enable_model_selector', true);
+  const promptTemplate = await getConfig('model_selector_prompt', SELECTOR_PROMPT_TEMPLATE);
+  
+  return {
+    enabled: enableAutoSelect,
+    promptTemplate
+  };
+}
+
 export async function selectModel(userRequest) {
+  const { enabled, promptTemplate } = await getSelectorConfig();
+  
+  // 如果禁用了自动选择，直接返回默认模型
+  if (!enabled) {
+    const defaultModel = await getDefaultModelConfig();
+    return defaultModel?.modelId || defaultSelectorConfig.modelId;
+  }
+
   try {
     // 只获取激活的模型配置
     const modelConfigs = await getAllModelConfigs(false);
@@ -47,7 +67,8 @@ export async function selectModel(userRequest) {
     }).join('\n');
 
     // 构建请求提示词
-    const prompt = SELECTOR_PROMPT_TEMPLATE
+    const SELECTOR_PROMPT = promptTemplate || SELECTOR_PROMPT_TEMPLATE;
+    const prompt = SELECTOR_PROMPT
       .replace('{{MODEL_DESCRIPTIONS}}', modelDescriptions)
       .replace('{{USER_REQUEST}}', userRequest);
 

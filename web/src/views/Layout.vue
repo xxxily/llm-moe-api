@@ -29,6 +29,14 @@
           <el-icon><User /></el-icon>
           <template #title>管理员</template>
         </el-menu-item>
+        <el-menu-item index="/system-logs">
+          <el-icon><Document /></el-icon>
+          <template #title>接口日志</template>
+        </el-menu-item>
+        <el-menu-item index="system-config">
+          <el-icon><Setting /></el-icon>
+          <template #title>系统配置</template>
+        </el-menu-item>
       </el-menu>
     </el-aside>
     
@@ -39,7 +47,6 @@
             <el-icon class="mobile-toggle" @click="toggleMenu">
               <Menu />
             </el-icon>
-            <!-- <h2 class="header-title">LLM MOE 管理系统</h2> -->
           </div>
           <el-dropdown @command="handleCommand">
             <span class="user-dropdown">
@@ -65,7 +72,7 @@
 <script setup>
 import { ref, onMounted, onBeforeUnmount, computed } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
-import { Monitor, Connection, Avatar, User, CaretBottom, Fold, Expand, Menu } from '@element-plus/icons-vue'
+import { Monitor, Connection, Avatar, User, CaretBottom, Fold, Expand, Menu, Setting, Document } from '@element-plus/icons-vue'
 import { ElMessage } from 'element-plus'
 import { useWindowSize } from '@vueuse/core'
 

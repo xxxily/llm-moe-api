@@ -33,6 +33,21 @@ const routes = [
         path: 'admins',
         name: 'Admins',
         component: () => import('../views/Admins.vue')
+      },
+      {
+        path: 'system-config',
+        name: 'SystemConfig',
+        component: () => import('../views/SystemConfig.vue')
+      },
+      {
+        path: 'system-logs',
+        name: 'SystemLogs',
+        component: () => import('../views/SystemLogs.vue')
+      },
+      {
+        path: '/:pathMatch(.*)*',
+        name: 'NotFound',
+        component: () => import('../views/NotFound.vue')
       }
     ]
   }

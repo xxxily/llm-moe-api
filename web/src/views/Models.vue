@@ -291,7 +291,7 @@ const capabilitiesArray = computed({
 const rules = {
   modelId: [
     { required: true, message: '请输入模型ID', trigger: 'blur' },
-    { pattern: /^[a-zA-Z0-9-]+$/, message: '模型ID只能包含字母、数字和连字符', trigger: 'blur' }
+    { pattern: /^[a-zA-Z0-9-.]+$/, message: '模型ID只能包含字母、数字和连字符', trigger: 'blur' }
   ],
   name: [
     { required: true, message: '请输入名称', trigger: 'blur' }

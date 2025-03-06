@@ -8,6 +8,7 @@
     "start": "node src/index.js",
     "dev": "nodemon src/index.js",
     "setup": "node src/setup.js",
+    "reset": "node src/setup.js --reset",
     "build:web": "cd web && npm run build",
     "dev:web": "cd web && npm run dev",
     "setup:web": "cd web && npm install"
@@ -33,7 +34,8 @@
     "ejs": "^3.1.10",
     "express": "^4.21.2",
     "express-session": "^1.18.1",
-    "node-fetch": "^3.3.2"
+    "node-fetch": "^3.3.2",
+    "ws": "^8.18.1"
   },
   "devDependencies": {
     "nodemon": "^3.1.9",

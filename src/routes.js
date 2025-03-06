@@ -5,6 +5,8 @@ import { selectModel } from './services/modelSelector.js';
 import { proxyLLMRequest } from './services/llmProxy.js';
 import { adminAuthMiddleware } from './middleware/auth.js';
 import { validateAdmin } from './services/adminService.js';
+import systemConfigRouter from './routes/systemConfig.js';
+import { apiLoggerMiddleware, getRecentLogs } from './middleware/loggerMiddleware.js';
 
 import {
   getAllModelConfigs,
@@ -25,8 +27,8 @@ import {
 } from './services/agentService.js';
 
 export function setupRoutes(app) {
-  // OpenAI兼容API
-  app.post('/v1/chat/completions', async (req, res) => {
+  // OpenAI兼容API - 添加日志中间件
+  app.post('/v1/chat/completions', apiLoggerMiddleware, async (req, res) => {
     try {
       // 从用户消息中提取请求内容
       const userMessages = req.body.messages || [];
@@ -45,6 +47,20 @@ export function setupRoutes(app) {
       res.status(500).json({ error: error.message });
     }
   });
+
+  // 添加获取日志的API端点
+  app.get('/api/logs', adminAuthMiddleware, (req, res) => {
+    try {
+      const limit = parseInt(req.query.limit) || 100;
+      const logs = getRecentLogs(limit);
+      res.json(logs);
+    } catch (error) {
+      res.status(500).json({ error: error.message });
+    }
+  });
+
+  // 系统配置管理API
+  app.use('/api', systemConfigRouter);
 
   // 模型配置管理API
   app.get('/api/models', async (req, res) => {
