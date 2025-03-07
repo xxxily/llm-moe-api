@@ -10,9 +10,9 @@
     <div class="category-tabs">
       <el-tabs v-model="activeCategory" @tab-click="handleCategoryChange">
         <el-tab-pane label="选择器配置" name="selector"></el-tab-pane>
+        <el-tab-pane label="Agent配置" name="agent"></el-tab-pane>
         <el-tab-pane label="系统配置" name="system"></el-tab-pane>
         <el-tab-pane label="LLM提供商配置" name="llm"></el-tab-pane>
-        <el-tab-pane label="Agent配置" name="agent"></el-tab-pane>
       </el-tabs>
     </div>
 

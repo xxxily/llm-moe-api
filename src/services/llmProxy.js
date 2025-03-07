@@ -128,6 +128,8 @@ export async function proxyLLMRequest(modelId, requestData, res) {
       response.body.pipe(res);
     } else {
       // 非流式请求处理
+      console.warn(chalk.red(`使用非流式请求处理: ${chalk.bold(modelId)} 处理请求`));
+      
       const response = await fetch(apiUrl, {
         method: 'POST',
         headers,

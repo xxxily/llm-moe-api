@@ -1,7 +1,7 @@
 import fetch from 'node-fetch';
 import chalk from 'chalk';
 import { getAllModelConfigs, getDefaultModelConfig } from './modelConfigService.js';
-import { getConfig } from './systemConfigService.js';
+import { getConfig, getConfigValue } from './systemConfigService.js';
 
 // 默认选择器模型配置
 const defaultSelectorConfig = {
@@ -25,8 +25,8 @@ const SELECTOR_PROMPT_TEMPLATE = `
 // 根据用户请求选择最合适的模型
 // 获取选择器配置
 async function getSelectorConfig() {
-  const enableAutoSelect = await getConfig('enable_model_selector', true);
-  const promptTemplate = await getConfig('model_selector_prompt', SELECTOR_PROMPT_TEMPLATE);
+  const enableAutoSelect = await getConfigValue('enable_model_selector', true);
+  const promptTemplate = await getConfigValue('model_selector_prompt', SELECTOR_PROMPT_TEMPLATE);
   
   return {
     enabled: enableAutoSelect,

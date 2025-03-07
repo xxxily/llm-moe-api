@@ -1,7 +1,7 @@
 import fetch from 'node-fetch';
 import chalk from 'chalk';
 import { getAllAgents, getDefaultAgent } from './agentService.js';
-import { getConfig } from './systemConfigService.js';
+import { getConfig, getConfigValue } from './systemConfigService.js';
 
 // 默认选择器模型配置
 const defaultSelectorConfig = {
@@ -25,8 +25,8 @@ const AGENT_SELECTOR_PROMPT_TEMPLATE = `
 // 根据用户请求选择最合适的Agent
 // 获取Agent选择器配置
 async function getAgentSelectorConfig() {
-  const enableAutoSelect = await getConfig('enable_agent_selector', true);
-  const promptTemplate = await getConfig('agent_selector_prompt', AGENT_SELECTOR_PROMPT_TEMPLATE);
+  const enableAutoSelect = await getConfigValue('enable_agent_selector', true);
+  const promptTemplate = await getConfigValue('agent_selector_prompt', AGENT_SELECTOR_PROMPT_TEMPLATE);
   
   return {
     enabled: enableAutoSelect,

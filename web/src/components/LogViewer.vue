@@ -236,6 +236,7 @@ onUnmounted(() => {
   font-size: 12px;
   line-height: 1.5;
   height: 400px;
+  min-height: 300px;
 }
 
 .log-entry {
@@ -260,5 +261,6 @@ onUnmounted(() => {
   align-items: center;
   height: 100%;
   color: #909399;
+  min-height: 300px;
 }
 </style>

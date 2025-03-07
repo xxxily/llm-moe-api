@@ -112,14 +112,25 @@
               </div>
             </div>
             <div class="card-actions">
-              <el-button size="small" @click="handleEdit(agent)">编辑</el-button>
-              <el-button size="small" type="success" @click="handleCopy(agent)">复制</el-button>
-              <el-button 
-                size="small" 
-                type="danger" 
-                @click="handleDelete(agent)"
-                :disabled="agent.isDefault"
-              >删除</el-button>
+              <div class="card-status-switch">
+                <!-- <span class="switch-label">状态:</span> -->
+                <el-switch 
+                  v-model="agent.isActive" 
+                  @change="handleStatusChange(agent)"
+                  :disabled="agent.isDefault"
+                  size="small"
+                />
+              </div>
+              <div class="card-buttons">
+                <el-button size="small" @click="handleEdit(agent)">编辑</el-button>
+                <el-button size="small" type="success" @click="handleCopy(agent)">复制</el-button>
+                <el-button 
+                  size="small" 
+                  type="danger" 
+                  @click="handleDelete(agent)"
+                  :disabled="agent.isDefault"
+                >删除</el-button>
+              </div>
             </div>
           </el-card>
         </el-col>
@@ -564,6 +575,28 @@ const handleCopy = (row) => {
   // 打开对话框
   dialogVisible.value = true
 }
+
+// 处理状态切换
+const handleStatusChange = async (agent) => {
+  try {
+    const response = await put(`/api/agents/${agent.agentId}`, {
+      isActive: agent.isActive
+    })
+    
+    if (!response.ok) {
+      const errorData = await response.json()
+      throw new Error(errorData.error || '更新状态失败')
+    }
+    
+    ElMessage.success(`${agent.name} 已${agent.isActive ? '启用' : '禁用'}`)
+    // 刷新列表以确保数据一致性
+    await fetchAgents()
+  } catch (error) {
+    // 恢复原始状态
+    agent.isActive = !agent.isActive
+    ElMessage.error(error.message || '更新状态失败')
+  }
+}
 </script>
 
 <style scoped>
@@ -751,18 +784,35 @@ const handleCopy = (row) => {
 .card-actions {
   padding: 10px 15px;
   display: flex;
-  justify-content: flex-end;
-  gap: 10px;
+  justify-content: space-between;
+  align-items: center;
   border-top: 1px solid #ebeef5;
   background-color: #f9fafc;
 }
 
-.card-actions .el-button {
-  border-radius: 8px;
-  transition: all 0.3s ease;
+.card-status-switch {
+  display: flex;
+  align-items: center;
+  gap: 8px;
 }
 
-.card-actions .el-button:hover {
+.switch-label {
+  font-size: 13px;
+  color: #606266;
+}
+
+.card-buttons {
+  display: flex;
+  gap: 0px; /* 减小按钮间距 */
+}
+
+.card-buttons .el-button {
+  border-radius: 8px;
+  transition: all 0.3s ease;
+  padding: 8px 12px; /* 调整按钮内边距使其更紧凑 */
+}
+
+.card-buttons .el-button:hover {
   transform: translateY(-2px);
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }

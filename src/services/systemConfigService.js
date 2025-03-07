@@ -26,6 +26,17 @@ export async function getConfig(key) {
   return config;
 }
 
+// 获取配置值并解析
+export async function getConfigValue(key, defaultValue = null) {
+  const config = await getConfig(key, null);
+  
+  if (!config) {
+    return defaultValue;
+  }
+  
+  return parseConfigValue(config);
+}
+
 // 获取指定分类的所有配置
 export async function getCategoryConfigs(category) {
   const configs = await prisma.SystemConfig.findMany({
